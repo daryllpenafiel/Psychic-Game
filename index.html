@@ -1,0 +1,102 @@
+<!doctype HTML> 
+<html>
+
+<head>
+    <title>The Psychic Game</title>
+    <meta charset="UTF-8">
+</head>
+
+<body>
+
+    <h1> Psychic Game</h1>
+
+    <div id="game">
+
+        <ul class="list-group">
+            </li><p id="wins">Wins: </p>
+            <p id="losses">Losses: </p>
+            <p id="guessLeft">Remaining Guesses: 9</p>
+            <p id="letters">Your Guesses so far: </p>
+        </ul>
+
+    </div>
+
+</body>
+
+<script>
+
+    //VARIABLES
+   
+
+    var wins = 0;
+    var losses = 0;
+    var guesses = 9;
+    var remainingGuess = 9;
+    var guessedLetters = [];
+    var letterToGuess;
+    var userInput = "";
+
+    //FUNCTIONS
+
+    //PC Random letter - OK
+    var alphabet = ['a','b',"c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z"];
+        var pcGuess = alphabet[Math.floor((Math.random(alphabet.length)*26))];
+        console.log("letter to guess: " + pcGuess);
+        check();
+
+    //Update Wins - OK
+    function updateWins() {
+        wins++;
+        document.getElementById('wins').innerHTML = "Wins: " + wins;
+    };
+
+    //Update Losses
+    function updateLosses() {
+        losses++;
+        document.getElementById('losses').innerHTML = "Losses: " + losses;
+    };
+
+    //Update Remaining Guesses - OK
+    function updateRemainingGuesses () {
+        remainingGuess--;
+        document.getElementById('guessLeft').innerHTML = "Remaining Guesses: " + remainingGuess;
+    };
+
+    //Reset
+    function reset() {
+        pcGuess = alphabet[Math.floor((Math.random(alphabet.length)*26))];
+        console.log("new letter to guess: " + pcGuess);
+        remainingGuess = 9;
+        guessedLetters = [];
+        updateRemainingGuesses();
+    };
+
+    //1 Sausage Mcmuffin, 2 Double Cheeseburger, 1 Large Fries
+
+    //Input User Guess
+
+    function check () {
+            document.onkeyup = function(event) {
+            userInput = event.key;
+            console.log(userInput);
+            guessedLetters.push(userInput);
+            document.getElementById("letters").innerHTML = "Your Guesses so far: " + guessedLetters;
+                
+                if (remainingGuess !== 0) {
+                    if (userInput == pcGuess) {
+                    alert("Correct guess!");
+                    updateWins();
+                    reset();
+                    } else {
+                    updateRemainingGuesses();}
+                } else {
+                    updateLosses();
+                    reset();
+                    alert("You lose. Next round!");
+                }
+        }
+    };
+</script>
+
+</html>
+
